@@ -73,20 +73,11 @@ function Pomodoro() {
           setCurrentState("Focusing")
           setFocusTime(focusDuration)
           setFocusCount(focusDuration*60)
-          console.log("FOCUS")
+          console.log(focusTime)
         }
       },
       isTimerRunning ? 1000 : null
     );
-
-    // useEffect(() => {
-    //   if(!isTimerRunning && focusCount === 0) {
-    //     setCurrentState("On Break")
-    //     setFocusCount(focusDuration * 60)
-    //     console.log("render focus")
-    //     console.log(focusCount)
-    //   }
-    // }, [focusCount])
 
     useEffect(() => {
       setFocusTime(focusDuration);
