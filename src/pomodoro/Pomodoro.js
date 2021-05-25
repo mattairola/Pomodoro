@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import classNames from "../utils/class-names";
 import useInterval from "../utils/useInterval";
-import Timer from "./Timer";
-import Display from "./Display";
+import BreakTime from "./BreakTime";
+import FocusTime from "./FocusTime";
+import SessionDisplay from "./SessionDisplay";
 
 function Pomodoro() {
   // Timer starts out paused
@@ -20,19 +21,8 @@ function Pomodoro() {
   const [ stopped, setStopped ] = useState(true);
   const [ paused, setPaused ] = useState("");
   const [ focusTime, setFocusTime ] = useState(focusDuration)
-
-  function playPause() {
-      setIsTimerRunning((prevState) => !prevState);
-      setStopped(false)
-      setDisabled(false)
-      if(!isTimerRunning) {
-        setHidden(true);
-        setPaused("")
-      }else{
-        setPaused("PAUSED");
-      }
-    }
-
+    
+//adjustment of the focusDuration & breakDuration
     function decreaseFocus() {
       setFocusDuration(focusDuration - 5);
       setFocusCount((focusDuration - 5)*60)
@@ -83,6 +73,18 @@ function Pomodoro() {
       setFocusTime(focusDuration);
     }, [focusDuration]);
 
+    function playPause() {
+      setIsTimerRunning((prevState) => !prevState);
+      setStopped(false)
+      setDisabled(false)
+      if(!isTimerRunning) {
+        setHidden(true);
+        setPaused("")
+      }else{
+        setPaused("PAUSED");
+      }
+    }
+
     function stop() {
       setFocusCount(focusDuration * 60)
       setBreakCount(breakDuration * 60)
@@ -95,16 +97,29 @@ function Pomodoro() {
 
   return (
     <div className="pomodoro">
-        <div>
-            <Timer 
-            increaseBreak={increaseBreak}
-            decreaseBreak={decreaseBreak}
-            increaseFocus={increaseFocus}
-            decreaseFocus={decreaseFocus}
-            focusDuration={focusDuration}
-            breakDuration={breakDuration}
-            isTimerRunning={isTimerRunning}
+      <div className="row">
+        <div className="col">
+          <div className="input-group input-group-lg mb-2">
+            <FocusTime
+              increaseFocus={increaseFocus}
+              decreaseFocus={decreaseFocus}
+              focusDuration={focusDuration}
+              isTimerRunning={isTimerRunning}
             />
+          </div>
+        </div>
+        <div className="col">
+          <div className="float-right">
+            <div className="input-group input-group-lg mb-2">
+              <BreakTime
+                breakDuration={breakDuration}
+                increaseBreak={increaseBreak}
+                decreaseBreak={decreaseBreak}
+                isTimerRunning={isTimerRunning}
+              />
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="row">
@@ -145,19 +160,18 @@ function Pomodoro() {
         </div>
       </div>
       <div>
-        {/* TODO: This area should show only when there is an active focus or break - i.e. the session is running or is paused */}
-        <Display 
+      {/* TODO: This area should show only when there is an active focus or break - i.e. the session is running or is paused */}
+        <SessionDisplay 
           disabled={disabled}
           hidden={hidden}
           currentState={currentState}
           focusDuration={focusDuration}
           breakDuration={breakDuration}
           isTimerRunning={isTimerRunning}
+          progress={progress}
           focusCount={focusCount}
           breakCount={breakCount}
-          progress={progress}
           stopped={stopped}
-          paused={paused}
         />
       </div>
     </div>
