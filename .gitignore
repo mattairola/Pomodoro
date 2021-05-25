@@ -3,6 +3,7 @@
 # dependencies
 /node_modules
 .vercel
+node_modules
 
 # misc
 .env.production
