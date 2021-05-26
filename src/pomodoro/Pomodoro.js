@@ -37,9 +37,9 @@ function Pomodoro() {
     }
     function increaseBreak() {
       setBreakDuration(breakDuration + 1);
-      setBreakCount((breakDuration + 1)*60)
+      setBreakCount((breakDuration + 1)*60);
     }
-   
+
     useInterval(() => {
         if(focusCount > 0 && currentState==="Focusing"){
           setFocusCount((prevCount) => prevCount - 1);
@@ -73,6 +73,8 @@ function Pomodoro() {
       setFocusTime(focusDuration);
     }, [focusDuration]);
 
+
+  //Play/Pause & Stop 
     function playPause() {
       setIsTimerRunning((prevState) => !prevState);
       setStopped(false)
@@ -94,6 +96,7 @@ function Pomodoro() {
       setProgress(0);
       setDisabled(true);
     }
+
 
   return (
     <div className="pomodoro">
@@ -172,6 +175,7 @@ function Pomodoro() {
           focusCount={focusCount}
           breakCount={breakCount}
           stopped={stopped}
+          paused={paused}
         />
       </div>
     </div>

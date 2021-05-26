@@ -1,5 +1,5 @@
 import React from "react";
-import { minutesToDuration, secondsToDuration } from "../utils/duration";
+import { minutesToDuration } from "../utils/duration";
 import TimeRemaining from "./TimeRemaining";
 import ProgressBar from "./ProgressBar";
 
